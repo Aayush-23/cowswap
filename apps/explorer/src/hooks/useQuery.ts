@@ -18,16 +18,16 @@ export function buildSearchQuery(params: { [key in string]: string }): URLSearch
   return new URLSearchParams(params)
 }
 
-export function useUpdateQueryString(): (key: string, value: string) => void {
+export function useUpdateQueryString(): (key: string, value: string, replace?: boolean) => void {
   const query = useQuery()
   const navigate = useNavigate()
 
   return useCallback(
-    (key: string, value: string) => {
+    (key: string, value: string, replace: boolean = true) => {
       query.set(key, value)
 
-      navigate({ search: query.toString() }, { replace: true })
+      navigate({ search: query.toString() }, { replace })
     },
-    [navigate, query]
+    [navigate, query],
   )
 }

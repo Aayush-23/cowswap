@@ -196,13 +196,12 @@ export const OrderDetails: React.FC<Props> = (props) => {
     const newTabViewName = TabView[tabId]
     if (!newTabViewName) return
 
-    setTabViewSelected(TabView[newTabViewName])
+    updateQueryString(TAB_QUERY_PARAM_KEY, TabView[tabId].toLowerCase(), false)
   }, [])
 
-  useEffect(
-    () => updateQueryString(TAB_QUERY_PARAM_KEY, TabView[tabViewSelected].toLowerCase()),
-    [tabViewSelected, updateQueryString],
-  )
+  useEffect(() => {
+    setTabViewSelected(TabView[tab] || TabView[DEFAULT_TAB])
+  }, [tab])
 
   if (!chainId) {
     return null
